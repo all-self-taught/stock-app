@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chart the Stocks</title>
+</head>
+<body>
+	<canvas id="StockChart"></canvas>
+	<ul>
+		<% symbols.forEach(function(symbol){ %>
+			<li><%= symbol.symbol %> | <a href="#" onclick="deleteSymbol('<%= symbol.id %>')">Delete</a></li>
+		<% }); %>
+	</ul>
+
+	<form id="newSymbol" action="/" method="POST">
+		<input type="text" id=symbolText name="stock" />
+		<input type="submit" value="Add Stock" />
+	</form>
+	<script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/chart.js/dist/Chart.min.js"></script>
+	<script type="text/javascript" src="/socket.io-client/dist/socket.io.js"></script>
+	<script type="text/javascript">
+		var data = <%- JSON.stringify(quotes) %>
+		var symbols = <%- JSON.stringify(symbols) %>
+	</script>
+  	<script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
