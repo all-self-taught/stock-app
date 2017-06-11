@@ -13,6 +13,23 @@ app.use(require('body-parser')());
 //connect to local mongodb database
 var db = mongoose.connect('mongodb://127.0.0.1:27017/stock-app');
 
+var session = require('express-session')
+
+var MongoStore = require('connect-mongo')(session)
+
+app.use(session({
+  secret: 'your secret here',
+  saveUninitialized: true,
+  resave: true,
+  // using store session on MongoDB using express-session + connect
+  store: new MongoStore({
+    url: 'mongodb://127.0.0.1:27017/stock-app',
+    collection: 'sessions'
+  })
+}));
+
+
+
 //attach lister to connected event
 mongoose.connection.once('connected', function() {
 	console.log("Connected to database")
